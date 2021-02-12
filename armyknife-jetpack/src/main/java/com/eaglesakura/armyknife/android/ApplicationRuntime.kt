@@ -22,6 +22,7 @@ import androidx.annotation.IntDef
  * @author @eaglesakura
  * @link https://github.com/eaglesakura/armyknife-jetpack
  */
+@Deprecated("https://github.com/eaglesakura/android-application-runtime")
 object ApplicationRuntime {
 
     /**

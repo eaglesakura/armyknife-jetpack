@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData
  * LiveData factory for some use case.
  */
 @Suppress("unused")
+@Deprecated("https://github.com/eaglesakura/livedata-factory")
 object LiveDataFactory {
 
     /**

@@ -21,6 +21,7 @@ import kotlinx.parcelize.Parcelize
  */
 @Suppress("MemberVisibilityCanBePrivate")
 @Parcelize
+@Deprecated("https://github.com/eaglesakura/displayinfo")
 data class DisplayInfo(
 
     /**
