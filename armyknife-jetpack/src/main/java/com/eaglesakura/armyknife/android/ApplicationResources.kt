@@ -16,6 +16,7 @@ import androidx.core.net.toUri
  * @author @eaglesakura
  * @link https://github.com/eaglesakura/armyknife-jetpack
  */
+@Deprecated("move to ResourceExtensions")
 object ApplicationResources {
 
     /**

@@ -56,6 +56,7 @@ object LiveDataFactory {
      * @param source original LiveData
      * @param filter if write dst value, then return true.
      */
+    @Deprecated("use LiveData.where {}")
     fun <T> filter(source: LiveData<T>, filter: (value: T?) -> Boolean): MutableLiveData<T> {
         return MediatorLiveData<T>().also { result ->
             result.addSource(source) {

@@ -17,7 +17,9 @@ import androidx.core.content.ContextCompat
  *
  * @author @eaglesakura
  * @link https://github.com/eaglesakura/armyknife-jetpack
+ * @link https://github.com/eaglesakura/android-application-runtime
  */
+@Deprecated("https://github.com/eaglesakura/android-application-runtime")
 object RuntimePermissions {
 
     /**

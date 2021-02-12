@@ -1,4 +1,4 @@
-@file:Suppress("MemberVisibilityCanBePrivate")
+@file:Suppress("MemberVisibilityCanBePrivate", "unused")
 
 package com.eaglesakura.armyknife.android
 
@@ -31,6 +31,7 @@ object ApplicationRuntime {
      * @author @eaglesakura
      * @link https://github.com/eaglesakura/armyknife-jetpack
      */
+    @Deprecated("remove this")
     val pid: Int
         get() = android.os.Process.myPid()
 
@@ -39,6 +40,7 @@ object ApplicationRuntime {
      * it is not exist "NotificationChannelCompat" or such else.
      * Should check SDK_INT, and register notification channel when it.
      */
+    @Deprecated("remove this")
     val requiredNotificationChannel: Boolean = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
 
     /**
@@ -47,6 +49,7 @@ object ApplicationRuntime {
      * @author @eaglesakura
      * @link https://github.com/eaglesakura/armyknife-jetpack
      */
+    @Deprecated("remove this")
     fun killSelf() {
         android.os.Process.killProcess(pid)
         while (true) {
@@ -60,6 +63,7 @@ object ApplicationRuntime {
      * @author @eaglesakura
      * @link https://github.com/eaglesakura/armyknife-jetpack
      */
+    @Deprecated("remove this")
     val ROBOLECTRIC: Boolean = try {
         Class.forName("org.robolectric.Robolectric")
         true
@@ -70,6 +74,7 @@ object ApplicationRuntime {
     /**
      * Run on JUnit test case.
      */
+    @Deprecated("remove this")
     const val RUNTIME_JUNIT = 0x01 shl 0
 
     /**
@@ -77,6 +82,7 @@ object ApplicationRuntime {
      *
      * @link http://robolectric.org/
      */
+    @Deprecated("remove this")
     const val RUNTIME_ROBOLECTRIC = 0x01 shl 1
 
     /**
@@ -87,21 +93,25 @@ object ApplicationRuntime {
     /**
      * Run on Android device.
      */
+    @Deprecated("remove this")
     const val RUNTIME_ANDROID_DEVICE = 0x01 shl 3
 
     /**
      * Run on ART VM in Android device.
      */
+    @Deprecated("remove this")
     const val RUNTIME_ART = 0x01 shl 4
 
     /**
      * Run on Dalvik VM in Android device.
      */
+    @Deprecated("remove this")
     const val RUNTIME_DALVIK = 0x01 shl 5
 
     /**
      * Run on Java VM on PC.
      */
+    @Deprecated("remove this")
     const val RUNTIME_JAVA_VM = 0x01 shl 6
 
     /**
@@ -115,8 +125,10 @@ object ApplicationRuntime {
      * @see RUNTIME_DALVIK
      * @see RUNTIME_JAVA_VM
      */
-    val runtimeFlags: Int = getRuntimeFlags()
+    @Deprecated("remove this")
+    val runtimeFlags: Int = getRuntimeFlagsImpl()
 
+    @Deprecated("remove this")
     @Retention(AnnotationRetention.BINARY)
     @IntDef(
         RUNTIME_JUNIT,
@@ -137,6 +149,7 @@ object ApplicationRuntime {
      *      // ART with Instrumentation test.
      * }
      */
+    @Deprecated("remove this")
     @SuppressLint("WrongConstant")
     fun runIn(
         @RuntimeFlag flag: Int,
@@ -155,6 +168,7 @@ object ApplicationRuntime {
      * @author @eaglesakura
      * @link https://github.com/eaglesakura/armyknife-jetpack
      */
+    @Deprecated("remove this")
     fun getDeviceRotateDegree(context: Context): Int {
         val surfaceRotation =
             (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.rotation
@@ -173,6 +187,7 @@ object ApplicationRuntime {
      * @author @eaglesakura
      * @link https://github.com/eaglesakura/armyknife-jetpack
      */
+    @Deprecated("remove this")
     fun isForegroundApplicationSelf(context: Context): Boolean {
         return context.packageName == getTopApplicationPackage(context)
     }
@@ -211,6 +226,7 @@ object ApplicationRuntime {
      *
      * @see RuntimePermissions.hasAccessUsageStatusPermission
      */
+    @Deprecated("remove this")
     @SuppressLint("WrongConstant")
     fun getTopApplicationPackage(context: Context): String {
         if (Build.VERSION.SDK_INT >= 22) {
@@ -253,6 +269,7 @@ object ApplicationRuntime {
     /**
      * This method returns true when a "clazz" service is running on this device.
      */
+    @Deprecated("remove this")
     fun <T : Service> isServiceRunning(context: Context, clazz: Class<T>): Boolean {
         try {
             val activityManager =
@@ -270,35 +287,35 @@ object ApplicationRuntime {
 
         return false
     }
-}
 
-private fun getRuntimeFlags(): Int {
-    // check Virtual Machine.
-    val virtualMachineFlags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        ApplicationRuntime.RUNTIME_ART
-    } else {
-        ApplicationRuntime.RUNTIME_DALVIK
-    }
-
-    try {
-        Class.forName("org.junit.Assert")
-    } catch (e: ClassNotFoundException) {
-        return virtualMachineFlags or ApplicationRuntime.RUNTIME_ANDROID_DEVICE
-    }
-
-    val runtimeName = System.getProperty("java.runtime.name")?.toLowerCase() ?: ""
-    return when {
-        runtimeName.isEmpty() -> {
-            // Android Runtime.
-            virtualMachineFlags or ApplicationRuntime.RUNTIME_ANDROID_DEVICE
+    private fun getRuntimeFlagsImpl(): Int {
+        // check Virtual Machine.
+        val virtualMachineFlags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ApplicationRuntime.RUNTIME_ART
+        } else {
+            ApplicationRuntime.RUNTIME_DALVIK
         }
-        runtimeName.contains("android") -> {
-            // in Instrumentation test.
-            virtualMachineFlags or ApplicationRuntime.RUNTIME_ANDROID_DEVICE or ApplicationRuntime.RUNTIME_JUNIT or ApplicationRuntime.RUNTIME_INSTRUMENTATION
+
+        try {
+            Class.forName("org.junit.Assert")
+        } catch (e: ClassNotFoundException) {
+            return virtualMachineFlags or RUNTIME_ANDROID_DEVICE
         }
-        else -> {
-            // Only Java VM
-            ApplicationRuntime.RUNTIME_JUNIT or ApplicationRuntime.RUNTIME_ROBOLECTRIC or ApplicationRuntime.RUNTIME_JAVA_VM
+
+        val runtimeName = System.getProperty("java.runtime.name")?.toLowerCase() ?: ""
+        return when {
+            runtimeName.isEmpty() -> {
+                // Android Runtime.
+                virtualMachineFlags or RUNTIME_ANDROID_DEVICE
+            }
+            runtimeName.contains("android") -> {
+                // in Instrumentation test.
+                virtualMachineFlags or RUNTIME_ANDROID_DEVICE or RUNTIME_JUNIT or RUNTIME_INSTRUMENTATION
+            }
+            else -> {
+                // Only Java VM
+                RUNTIME_JUNIT or RUNTIME_ROBOLECTRIC or RUNTIME_JAVA_VM
+            }
         }
     }
 }
