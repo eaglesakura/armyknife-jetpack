@@ -1,8 +1,10 @@
 package com.eaglesakura.armyknife.android.extensions
 
 import android.annotation.SuppressLint
+import android.os.Build.VERSION_CODES
 import androidx.annotation.AnyThread
 import androidx.annotation.MainThread
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -10,8 +12,8 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.Transformations
-import com.annimon.stream.Optional
 import io.reactivex.subjects.PublishSubject
+import java.util.Optional
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -321,6 +323,7 @@ fun <T> LiveData<T>.copyTo(
  * @author @eaglesakura
  * @link https://github.com/eaglesakura/armyknife-jetpack
  */
+@SuppressLint("NewApi")
 @Suppress("unused")
 fun <T> LiveData<T>.toNullablePublishSubject(lifecycle: LifecycleOwner): PublishSubject<Optional<T>> {
     val subject = PublishSubject.create<Optional<T>>()

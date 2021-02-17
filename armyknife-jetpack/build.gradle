@@ -19,6 +19,6 @@ dependencies {
 //    "kaptAndroidTest" "com.google.auto.service:auto-service:1.0-rc4" 
     testImplementation "androidx.room:room-testing:2.2.6"
     androidTestImplementation "androidx.work:work-testing:2.5.0"
-    testImplementation "io.github.eaglesakura.armyknife-runtime:armyknife-runtime:1.4.0-rc02"
-    androidTestImplementation "io.github.eaglesakura.armyknife-runtime:armyknife-runtime:1.4.0-rc02"
+    testImplementation "io.github.eaglesakura.armyknife-runtime:armyknife-runtime:1.4.0"
+    androidTestImplementation "io.github.eaglesakura.armyknife-runtime:armyknife-runtime:1.4.0"
 }
