@@ -86,7 +86,7 @@ dependencies {
     api "androidx.dynamicanimation:dynamicanimation:1.0.0"
     api "androidx.emoji:emoji:1.1.0"
     api "androidx.percentlayout:percentlayout:1.0.0"
-    api "com.google.android.material:material:1.3.0" // Material components
+//    api "com.google.android.material:material:1.3.0" // Material components
     api "androidx.palette:palette:1.0.0"
     api "androidx.palette:palette-ktx:1.0.0"
 
@@ -137,20 +137,20 @@ dependencies {
     /**
      * Google Play Services
      */
-    api "com.google.android.gms:play-services-auth:19.0.0"
-    api "com.google.android.gms:play-services-analytics:17.0.0"
-    api "com.google.android.gms:play-services-appinvite:18.0.0"
-    api "com.google.android.gms:play-services-cast:19.0.0"
-    api "com.google.android.gms:play-services-cast-framework:19.0.0"
-    api "com.google.android.gms:play-services-measurement-api:18.0.2"
-    api "com.google.android.gms:play-services-tagmanager:17.0.0"
+//    api "com.google.android.gms:play-services-auth:19.0.0"
+//    api "com.google.android.gms:play-services-analytics:17.0.0"
+//    api "com.google.android.gms:play-services-appinvite:18.0.0"
+//    api "com.google.android.gms:play-services-cast:19.0.0"
+//    api "com.google.android.gms:play-services-cast-framework:19.0.0"
+//    api "com.google.android.gms:play-services-measurement-api:18.0.2"
+//    api "com.google.android.gms:play-services-tagmanager:17.0.0"
 //    api "com.google.android.gms:play-services-vision:20.1.2"
 //    api "com.google.android.gms:play-services-gass:18.3.0" // AdMob library.
 
     /**
      * Firebase
      */
-    api platform('com.google.firebase:firebase-bom:25.12.0')
+    api platform('com.google.firebase:firebase-bom:26.3.0')
     api "com.google.firebase:firebase-analytics-ktx"
     api "com.google.firebase:firebase-dynamic-links-ktx"
     api "com.google.firebase:firebase-iid"
@@ -159,9 +159,7 @@ dependencies {
         exclude group: "com.google.android.gms", module: "play-services-vision-image-label"
     }
     api "com.google.firebase:firebase-ml-model-interpreter"
-    api "com.google.firebase:firebase-ml-vision-image-label-model"
     api "com.google.firebase:firebase-core"
-    api "com.google.firebase:firebase-invites"
     api "com.google.firebase:firebase-perf-ktx"
     api "com.google.firebase:firebase-auth-ktx"
     api "com.google.firebase:firebase-config-ktx"

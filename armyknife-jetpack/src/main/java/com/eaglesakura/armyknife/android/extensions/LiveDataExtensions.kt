@@ -1,10 +1,8 @@
 package com.eaglesakura.armyknife.android.extensions
 
 import android.annotation.SuppressLint
-import android.os.Build.VERSION_CODES
 import androidx.annotation.AnyThread
 import androidx.annotation.MainThread
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -83,6 +81,34 @@ fun <T> LiveData<T>.observeAlive(owner: LifecycleOwner, observer: Observer<T>) {
         if (it == Lifecycle.Event.ON_DESTROY) {
             removeObserver(observer)
         }
+    }
+}
+
+/**
+ * Await receive a data in Coroutines.
+ */
+@Suppress("unused")
+suspend fun <T> LiveData<T?>.awaitNotNull(): T = awaitNotNull(
+    checkInitialValue = true,
+    filter = { true }
+)
+
+/**
+ * Await receive a data in Coroutines.
+ */
+@Suppress("unused")
+suspend fun <T> LiveData<T?>.awaitNotNull(
+    checkInitialValue: Boolean = true,
+    filter: (value: T) -> Boolean,
+): T {
+    return await(checkInitialValue) {
+        if (it != null) {
+            filter(it)
+        } else {
+            false
+        }
+    }.let {
+        checkNotNull(it)
     }
 }
 
@@ -456,4 +482,22 @@ fun <T> LiveData<T>.where(
             }
         )
     }
+}
+
+/**
+ * Map to Non-Null LiveData.
+ *
+ * e.g.
+ *
+ * val src: LiveData<String?>()
+ * val dst: LiveData<String> = src.filterNotNull("")
+ */
+fun <T> LiveData<T?>.filterNotNull(initial: T? = null): LiveData<T> {
+    val result: LiveData<T> = this
+        .nonNull()
+        .map { checkNotNull(it) }
+    if (initial != null) {
+        (result as MutableLiveData).value = initial
+    }
+    return result
 }

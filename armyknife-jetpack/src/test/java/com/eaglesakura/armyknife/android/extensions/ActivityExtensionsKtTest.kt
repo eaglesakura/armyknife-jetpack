@@ -24,16 +24,6 @@ import org.junit.runner.RunWith
 class ActivityExtensionsKtTest {
 
     @Test
-    fun savedStateHandle() = compatibleBlockingTest {
-        val activity = makeActivity()
-        assertEquals(activity.savedStateHandle, activity.savedStateHandle) // single state.
-
-        assertNull(activity.savedStateHandle.get<String>("url"))
-        activity.savedStateHandle.set("url", "https://example.com")
-        assertEquals("https://example.com", activity.savedStateHandle.get<String>("url"))
-    }
-
-    @Test
     fun contextInto() = compatibleBlockingTest {
         val activity = makeActivity(ExampleActivity::class)
         val context = withContext(Dispatchers.Main) {

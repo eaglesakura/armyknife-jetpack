@@ -146,4 +146,43 @@ class LiveDataExtensionsKtTest {
 
         assertNull(liveData.value)
     }
+
+    @Test
+    fun filterNotNull() = compatibleBlockingTest(Dispatchers.Main) {
+        val src = MutableLiveData<String?>()
+        val dst = src.filterNotNull()
+
+        src.forceActiveForever()
+        dst.forceActiveForever()
+
+        assertNull(src.value)
+        assertNull(dst.value)
+        yield()
+        src.value = "foo"
+        yield()
+        assertEquals(src.value, dst.value)
+        src.value = null
+        yield()
+        assertEquals("foo", dst.value)
+    }
+
+    @Test
+    fun filterNotNull_initial() = compatibleBlockingTest(Dispatchers.Main) {
+        val src = MutableLiveData<String?>()
+        val dst = src.filterNotNull("")
+
+        src.forceActiveForever()
+        dst.forceActiveForever()
+
+        assertNull(src.value)
+        assertEquals("", dst.value)
+
+        yield()
+        src.value = "foo"
+        yield()
+        assertEquals(src.value, dst.value)
+        src.value = null
+        yield()
+        assertEquals("foo", dst.value)
+    }
 }
